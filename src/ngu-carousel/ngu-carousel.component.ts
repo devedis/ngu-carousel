@@ -516,7 +516,7 @@ export class NguCarouselComponent
     this.pointIndex = Math.ceil(Nos / this.data.slideItems);
     const pointers = [];
 
-    if (this.pointIndex > 1 || !this.userData.point.hideOnSingleSlide) {
+    if ((this.pointIndex > 1 || !this.userData.point.hideOnSingleSlide) && this.pointIndex < Number.POSITIVE_INFINITY) {
       for (let i = 0; i < this.pointIndex; i++) {
         pointers.push(i);
       }
