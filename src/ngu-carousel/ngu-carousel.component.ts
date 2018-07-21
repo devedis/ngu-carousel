@@ -110,7 +110,7 @@ export class NguCarouselComponent
   private directionSym: string;
   private itemsSubscribe: Subscription;
   private carouselCssNode: any;
-  private pointIndex: number;
+  public pointIndex: number;
   private withAnim: boolean;
   pointers: number;
 
@@ -311,7 +311,7 @@ export class NguCarouselComponent
 
     // remove listeners
     for (let i = 1; i <= 8; i++) {
-      this[`listener${i}`] && this[`listener${i}`]();
+      (<any>this)[`listener${i}`] && (<any>this)[`listener${i}`]();
     }
   }
 
@@ -479,9 +479,12 @@ export class NguCarouselComponent
       this.data.items = this.userData.grid[this.data.deviceType];
       this.data.itemWidth = this.data.carouselWidth / this.data.items;
     } else {
-      this.data.items = Math.trunc(
-        this.data.carouselWidth / this.userData.grid.all
-      );
+      const x = this.data.carouselWidth / this.userData.grid.all;
+      if (x < 1) {
+        this.data.items = Math.ceil(x);
+      } else {
+        this.data.items = Math.trunc(x);
+      }
       this.data.itemWidth = this.userData.grid.all;
       this.data.deviceType = 'all';
     }
@@ -515,8 +518,10 @@ export class NguCarouselComponent
     const Nos = this.items.length - (this.data.items - this.data.slideItems);
     this.pointIndex = Math.ceil(Nos / this.data.slideItems);
     const pointers = [];
-
-    if ((this.pointIndex > 1 || !this.userData.point.hideOnSingleSlide) && this.pointIndex < Number.POSITIVE_INFINITY) {
+    if (this.pointIndex === Number.POSITIVE_INFINITY || this.pointIndex === Number.NEGATIVE_INFINITY) {
+      this.pointIndex = 0;
+    }
+    if (this.pointIndex > 1 || !this.userData.point.hideOnSingleSlide) {
       for (let i = 0; i < this.pointIndex; i++) {
         pointers.push(i);
       }

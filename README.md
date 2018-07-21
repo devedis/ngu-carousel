@@ -8,6 +8,12 @@ Angular Universal carousel
 
 for ChangeLog go to [CHANGELOG.md](https://github.com/sheikalthaf/ngu-carousel/blob/master/CHANGELOG.md)
 
+## Build
+Run `npm run build`
+Copy `package.dist.json` to `dist/package.json`
+Go into `dist`
+Run `npm pack`
+You now have a .tgz file.
 ## Demo
 
 Demo available [Here](https://sheikalthaf.github.io/ngx-carousel)
